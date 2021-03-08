@@ -1,0 +1,11 @@
+overwrite: true
+schema:
+  - "api/**/*.graphql"
+documents: null
+generates:
+  ./types/graph.d.ts:
+    plugins:
+      - "typescript"
+    config:
+      maybeValue: T
+      scalars:
