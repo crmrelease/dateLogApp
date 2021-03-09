@@ -29,8 +29,6 @@ const TEST_SAY_HELLO = gql`
 
 const Test = () => {
   const [input, setInput] = useState("");
-  const [queryResult, setQueryResult] = useState("");
-  const [mutationResult, setMutationResult] = useState("");
 
   const onHandleChange = (e) => {
     setInput(e.target.value);

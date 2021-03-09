@@ -5,6 +5,10 @@ import schema from "./schema";
 import http from "http";
 import app from "./middlewares/express";
 import colors from "colors";
+import testRouter from "./routes/route";
+
+app.use(bodyParser.json());
+app.use("/api", testRouter);
 
 const apolloServer = new ApolloServer({
   schema,
