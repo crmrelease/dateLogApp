@@ -1,8 +1,10 @@
-const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
-const express = require('express');
-const bodyParser = require('body-parser');
-import { ApolloServer } from 'apollo-server-express';
-import schema from './schema'
+import express from "express";
+import bodyParser from "body-parser";
+import { ApolloServer } from "apollo-server-express";
+import schema from "./schema";
+import http from "http";
+import app from "./middlewares/express";
+import colors from "colors";
 
 const apolloServer = new ApolloServer({
   schema,
@@ -19,11 +21,36 @@ const apolloServer = new ApolloServer({
   },
 });
 
-const app = express().use(bodyParser.json());
-
-app.listen({ port: 4000 },()=> {
-  // console.log(args);
-  // console.dir(apolloServer);
-  const url = 'http://localhost:' + 4000 + apolloServer.graphqlPath;
-  console.log(`✔ Apollo Server ready at ${url}\n\n\n`);
+apolloServer.applyMiddleware({
+  app,
+  cors: false, // Should be false to avoid conflicts with Express CORS middleware
+  path: "/graphql",
+  bodyParserConfig: { limit: "1000mb" },
 });
+
+const startServer = () => {
+  // Create a http server using express
+  // https://www.apollographql.com/docs/apollo-server/data/subscriptions/#subscriptions-with-additional-middleware
+  const httpServer = http.createServer(app);
+  apolloServer.installSubscriptionHandlers(httpServer);
+
+  // ⚠️ Pay attention to the fact that we are calling 'listen' on the http server variable, and not on 'app'.
+  // By the way, when subscription is not in use, app(the Express instance) usually calls listen method directly. e.g., app.listen(PORT, () => { });
+
+  httpServer.listen(4300, () => {
+    console.log(
+      `✔ Server ready at ${
+        colors.blue.bold(process.env.SERVER_DOMAIN ?? "") +
+        colors.blue.bold(apolloServer.graphqlPath)
+      }`
+    );
+    console.log(
+      `✔ Subscriptions ready at ${
+        colors.blue.bold(process.env.WEBSOCKET_SERVER_DOMAIN ?? "") +
+        colors.blue.bold(apolloServer.subscriptionsPath ?? "")
+      }`
+    );
+  });
+};
+
+startServer();

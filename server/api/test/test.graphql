@@ -3,5 +3,9 @@ type Test {
 }
 
 type Query {
-  sayHello: Test!
+  sayHello: Test
+}
+
+type Mutation {
+  doTest(testInput: String): Test
 }

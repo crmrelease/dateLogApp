@@ -18,5 +18,15 @@ export type Test = {
 
 export type Query = {
   __typename?: 'Query';
-  sayHello: Test;
+  sayHello?: Maybe<Test>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  doTest?: Maybe<Test>;
+};
+
+
+export type MutationDoTestArgs = {
+  testInput?: Maybe<Scalars['String']>;
 };
