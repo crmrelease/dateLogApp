@@ -6,9 +6,15 @@ import http from "http";
 import app from "./middlewares/express";
 import colors from "colors";
 import testRouter from "./routes/route";
+import { connectDatabase } from "./dbconnection";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 app.use(bodyParser.json());
 app.use("/api", testRouter);
+
+connectDatabase();
 
 const apolloServer = new ApolloServer({
   schema,

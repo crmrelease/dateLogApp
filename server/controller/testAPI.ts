@@ -4,6 +4,7 @@ exports.getTest = async (req, res, next) => {
 };
 
 exports.postTest = async (req, res, next) => {
+  console.log("post api");
   console.log("req", req.body);
   res.status(201).json({ result: "successPost" });
 };
