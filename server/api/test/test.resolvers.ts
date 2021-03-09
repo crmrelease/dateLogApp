@@ -9,7 +9,7 @@ const resolvers = {
   Mutation: {
     doTest: async (_, args) => {
       console.log(args);
-      let result = { test: args.testInput };
+      let result = { test: args.testInput + ": 잘됩니다" };
       return result;
     },
   },
