@@ -8,13 +8,14 @@ import colors from "colors";
 import testRouter from "./routes/route";
 import { connectDatabase } from "./dbconnection";
 import dotenv from "dotenv";
+const { sequelize } = require('./models')
 
 dotenv.config();
-
+sequelize.sync()
 app.use(bodyParser.json());
 app.use("/api", testRouter);
 
-connectDatabase();
+//connectDatabase();
 
 const apolloServer = new ApolloServer({
   schema,
