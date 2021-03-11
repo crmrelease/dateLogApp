@@ -4,6 +4,6 @@ const router = express.Router();
 const testController = require("../controller/testAPI");
 
 router.get("/test", testController.getTest);
-router.post("/test/:clientInput", testController.postTest);
+router.post("/test", testController.postTest);
 
 export default router;

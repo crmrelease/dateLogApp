@@ -1,4 +1,4 @@
-import { ApolloClient } from "@apollo/client";
+import { ApolloClient, ApolloLink } from "@apollo/client";
 import cache from "./cache";
 import { link } from "./link";
 // ApolloClient is an encapsulation of ApolloLink, ApolloCache... instances

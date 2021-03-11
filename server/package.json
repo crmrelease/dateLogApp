@@ -7,6 +7,7 @@
     "@graphql-tools/load-files": "^6.2.7",
     "apollo-server-express": "^2.21.1",
     "app-root-path": "^3.0.0",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "colors": "^1.4.0",
     "concurrently": "^6.0.0",
@@ -15,6 +16,7 @@
     "express": "^4.17.1",
     "graphql": "^15.5.0",
     "graphql-tools": "^7.0.4",
+    "kill-port": "^1.6.1",
     "merge-graphql-schemas": "^1.7.8",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
@@ -25,7 +27,7 @@
   },
   "scripts": {
     "generate": "graphql-codegen --config codegen.yml --watch",
-    "dev": "concurrently \"nodemon\" \"yarn generate\""
+    "dev": "yarn && kill-port 4300 && concurrently \"nodemon\" \"yarn generate\""
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.21.2",
