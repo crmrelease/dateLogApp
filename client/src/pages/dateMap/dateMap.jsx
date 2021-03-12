@@ -9,6 +9,16 @@ import { formatRelative } from "date-fns";
 import styled from "styled-components";
 import { DataGrid } from "@material-ui/data-grid";
 import produce from "immer";
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxOption,
+} from "@reach/combobox";
 
 require("dotenv").config();
 
@@ -33,6 +43,11 @@ const MapWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 700px;
+  width: 200px;
+`;
+
+const ComboWrapper = styled.div`
+  height: 300px;
   width: 200px;
 `;
 
@@ -81,9 +96,46 @@ const columns = [
   },
 ];
 
+// function Search() {
+//   const {
+//     ready,
+//     value,
+//     suggestions: { status, data },
+//     setValue,
+//     clearSuggestions,
+//   } = usePlacesAutocomplete({
+//     requestOptions: {
+//       location: { lat: () => 37.577991, lng: () => 127.03727 },
+//       radius: 200 * 1000,
+//     },
+//   });
+//   return (
+//     <Combobox
+//       onSelect={(address) => {
+//         console.log(address);
+//       }}
+//     >
+//       <ComboboxInput
+//         value={value}
+//         onChange={(e) => {
+//           setValue(e.target.value);
+//         }}
+//         disabled={!ready}
+//         placeholder="입력하세요"
+//       />
+//       <ComboboxPopover>
+//         {status === "OK" &&
+//           data.map(({ id, description }) => (
+//             <ComboboxOption key={id} value={description} />
+//           ))}
+//       </ComboboxPopover>
+//     </Combobox>
+//   );
+// }
+
 const DateMap = () => {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "",
+    googleMapsApiKey: "AIzaSyBWZfk6zCkfmgHC6ei7NQ3IJ--zRXzBuNg",
     libraries,
   });
 
@@ -112,6 +164,7 @@ const DateMap = () => {
   return (
     <Wrapper>
       <GoogleMap defaultZoom={10} defaultCenter={{ lat: 45.43, lng: -75.33 }} />
+
       <MapWrapper>
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
